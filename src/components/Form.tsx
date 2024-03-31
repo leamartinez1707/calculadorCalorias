@@ -1,10 +1,11 @@
 import { categories } from "../data/categories"
 import { useState, ChangeEvent } from "react"
+import { Activity } from "../types"
 
 export default function Form() {
 
-    const [activity, setActivity] = useState({
-        category: '1',
+    const [activity, setActivity] = useState<Activity>({
+        category: 1,
         name: '',
         calories: 0
     })
@@ -16,8 +17,12 @@ export default function Form() {
             [e.target.id]: isNumberField ? +e.target.value : e.target.value
         })
     }
+    const formValidation = () => {
+        const { name, calories } = activity
+        return name.trim() !== '' && calories > 0
+    }
 
-    
+
     return (
         <form action=""
             className="space-y-5 bg-white shadow p-10 rounded-lg"
@@ -60,8 +65,9 @@ export default function Form() {
                 />
             </div>
             <input type="submit"
-                className="bg-black hover:bg-gray-800 w-full p-2 font-bold uppercase text-white cursor-pointer rounded-md"
-                value='Guardar'
+                className="bg-black hover:bg-gray-800 w-full p-2 font-bold uppercase text-white cursor-pointer rounded-md disabled:opacity-20"
+                value={activity.category === 1 ? 'Guardar comida' : 'Guardar ejercicio'}
+                disabled={!formValidation()}
             />
         </form>
     )
