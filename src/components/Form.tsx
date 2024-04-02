@@ -81,6 +81,7 @@ export default function Form({ dispatch, state }: FormProps) {
                 <input
                     type="number"
                     id="calories"
+                    min={0}
                     className="border border-slate-300 p-2 rounded-lg"
                     placeholder="Ej: 150"
                     value={activity.calories}
