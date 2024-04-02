@@ -1,6 +1,7 @@
 import { useReducer } from 'react'
 import Form from "./components/Form"
 import { activityReducer, initialState } from './reducers/activityReducer'
+import ActivitiesList from './components/ActivitiesList'
 function App() {
 
   const [state, dispatch] = useReducer(activityReducer, initialState)
@@ -19,8 +20,16 @@ function App() {
           <p className="text-3xl font-bold">Formulario</p>
           <Form
             dispatch={dispatch}
+            state={state}
           />
         </div>
+      </section>
+      <section className='p-10 mx-auto max-w-4xl'>
+        <ActivitiesList
+          activities={state.activities}
+          dispatch={dispatch}
+        />
+
       </section>
     </>
   )

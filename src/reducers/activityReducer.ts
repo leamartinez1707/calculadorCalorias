@@ -1,23 +1,39 @@
 import { Activity } from "../types"
 
-export type ActivityActions = {
-    type: 'save-activity', payload: { newActivity: Activity }
+export type ActivityActions =
+    {
+        type: 'save-activity', payload: { newActivity: Activity }
+    } |
+    {
+        type: 'set-activeId', payload: { id: Activity['id'] }
+    }
 
-}
-
-type ActivityState = {
-    activities: Activity[]
+export type ActivityState = {
+    activities: Activity[],
+    activeId: Activity['id']
 }
 export const initialState: ActivityState = {
-    activities: []
+    activities: [],
+    activeId: ''
 }
 
 export const activityReducer = (
     state: ActivityState = initialState,
     action: ActivityActions
 ) => {
-    if(action.type === 'save-activity') {
+    if (action.type === 'save-activity') {
         // Este codigo maneja la logica para manejar el State
-        console.log('Desde el tipe de save act')
+        return {
+            ...state,
+            activities: [...state.activities, action.payload.newActivity]
+        }
     }
+    if (action.type === 'set-activeId') {
+        return {
+            ...state,
+            activeId: action.payload.id
+        }
+    }
+
+    return state
 }
