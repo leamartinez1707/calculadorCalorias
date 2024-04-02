@@ -2,6 +2,7 @@ import { useReducer, useEffect, useMemo } from 'react'
 import Form from "./components/Form"
 import { activityReducer, initialState } from './reducers/activityReducer'
 import ActivitiesList from './components/ActivitiesList'
+import CalorieTracker from './components/CalorieTracker'
 function App() {
 
   const [state, dispatch] = useReducer(activityReducer, initialState)
@@ -15,16 +16,16 @@ function App() {
   return (
     <>
       <header className="bg-amber-400 py-4">
-        <div className="max-w-4xl mx-auto flex justify-between">
-          <h1 className="text-center text-lg font-bold text-white uppercase ml-4">
+        <div className="max-w-4xl mx-auto flex justify-between items-center">
+          <h1 className="text-center text-xl font-bold text-white uppercase ml-4">
             Contador de calorias
           </h1>
           <button
-            className='bg-gray-800 hover:bg-gray-900 p-2 font-bold uppercase text-white cursor-pointer rounded-lg text-sm disabled:opacity-20'
+            className='bg-gray-800 hover:bg-gray-900 p-2 font-bold uppercase text-white cursor-pointer rounded-lg text-sm disabled:opacity-20 disabled:cursor-not-allowed'
             disabled={!canRestartApp()}
             onClick={() => dispatch({ type: 'restart-app' })}
           >
-            Reiniciar App
+            Reiniciar datos
           </button>
         </div>
       </header>
@@ -38,12 +39,20 @@ function App() {
           />
         </div>
       </section>
+
+      <section className='bg-gray-800 py-10'>
+        <div className='max-w-4xl mx-auto'>
+          <CalorieTracker
+            activities={state.activities}
+          />
+        </div>
+      </section>
+
       <section className='p-10 mx-auto max-w-4xl'>
         <ActivitiesList
           activities={state.activities}
           dispatch={dispatch}
         />
-
       </section>
     </>
   )

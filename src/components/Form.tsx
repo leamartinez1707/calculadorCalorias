@@ -25,15 +25,14 @@ export default function Form({ dispatch, state }: FormProps) {
             const selectedActivity = state.activities.filter(stateActivity => stateActivity.id === state.activeId)[0]
             setActivity(selectedActivity)
         }
-
-
     }, [state.activeId])
 
 
     const handleChange = (e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
+        const isNumberField = ['category', 'calories'].includes(e.target.id)
         setActivity({
             ...activity,
-            [e.target.id]: e.target.value
+            [e.target.id]: isNumberField ? +e.target.value : e.target.value
         })
     }
     const formValidation = () => {
@@ -44,6 +43,7 @@ export default function Form({ dispatch, state }: FormProps) {
         e.preventDefault()
         dispatch({ type: "save-activity", payload: { newActivity: activity } })
         setActivity({ ...initialState, id: uuidv4() })
+        console.log(activity)
     }
     return (
         <form action=""
